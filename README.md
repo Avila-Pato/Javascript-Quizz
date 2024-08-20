@@ -1,5 +1,5 @@
 # Zustand vs Redux 
-## Porque es mejor redux que zustand para principiantes?
+## Porque es mejor Zustand que redux para principiantes?
 
 ## Propósito
 como manejadores de estado global en aplicaciones React. El propósito principal es mostrar cómo Zustand puede ofrecer una solución más sencilla y directa en comparación con Redux, especialmente para proyectos que no requieren la complejidad adicional que Redux puede traer.

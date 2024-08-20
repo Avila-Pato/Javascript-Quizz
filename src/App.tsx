@@ -22,9 +22,10 @@ console.log(questions)
        Javascript Quizz
            </Typography>
        </Stack>
-
+      {/* Aplicando logica para que empieze el juego */}
        { questions.length === 0 && <Start />}
       { questions.length > 0 && <Game />}
+
       </Container>
     </main>
   

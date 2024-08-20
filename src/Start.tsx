@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useQuestionsStore } from "./store/question";
 
-const LIMIT_QUESTIONS = 10;
+const LIMIT_QUESTIONS = 15;
 
 export const  Start = () => {
 

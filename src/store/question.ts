@@ -16,7 +16,7 @@ interface State {
 
 // Con esto ya estamos creando el estado global de la web 
 // set es para actualizar el estado, get para leer el estado
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export const useQuestionsStore = create<State>((set, get) => {
     return {
         questions: [],

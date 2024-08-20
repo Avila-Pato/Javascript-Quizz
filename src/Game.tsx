@@ -4,6 +4,7 @@ import { useQuestionsStore } from "./store/question";
 import SyntaxHighLighter from 'react-syntax-highlighter';
 import { gradientDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
+import { Footer } from "./Footer";
 
 
 
@@ -84,12 +85,16 @@ export const Game = () => {
                 <ArrowBackIosNew />
                 </IconButton>
 
-                <IconButton onClick={goNextQuestion} disabled={currentQuestion > 
+                {/* // mostrar el numero de la pregunta actual y el total de preguntas */}
+                {currentQuestion + 1} / {questions.length}
+
+                <IconButton onClick={goNextQuestion} disabled={currentQuestion >= 
                     questions.length - 1 }>
                 <ArrowForwardIos />
                     </IconButton>
              </Stack>
         <Question info={questionInfo} />
+        <Footer />
         </>
     )
 }

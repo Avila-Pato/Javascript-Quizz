@@ -1,12 +1,8 @@
+import { RestartAlt } from "@mui/icons-material";
+import { IconButton, Stack, Typography } from "@mui/material";
+import { useQuestionsData } from "./assets/hooks/QuestionsData";
+import { useQuestionsStore } from './store/question';
 
-// Estado global de la paginazion p[ara que aparescan las preguntas segun su respuesta 
-// y esta responda de manera correcta, incorrecta o unsawer  
-
-import { RestartAlt } from "@mui/icons-material"
-import { IconButton, Stack, Typography } from "@mui/material"
-import { useQuestionsData } from "./assets/hooks/QuestionsData"
-
-// vamos a usar un costomHokks que es lo que react ofrece 
 
 export const Footer = () => {
     const {
@@ -14,12 +10,13 @@ export const Footer = () => {
         incorrect,
         unanswer,
         questions,
-    } = useQuestionsData()
+    } = useQuestionsData();
 
-    
+    const reset = useQuestionsStore(state => state.reset);
+
     return (
         <Stack direction="row" gap={2}>
-            <IconButton color="primary" onClick={() => location.reload()}>
+           <IconButton color="primary" onClick={reset}>
                 <RestartAlt />
             </IconButton>
             <Typography variant="h5" flex={1}>
@@ -29,7 +26,5 @@ export const Footer = () => {
                 {`✅ ${Math.ceil((correct / questions.length) * 100)}%`}
             </Typography>
         </Stack>
-    )
-    
-    
-}
+    );
+};

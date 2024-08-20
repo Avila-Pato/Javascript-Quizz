@@ -4,8 +4,10 @@ import confetti from 'canvas-confetti';
 // persist es para capturar todos los cambios que se hagan en la store y lo sincroniza 
 import { persist } from 'zustand/middleware'
 
+
 // describe como es el estado 
 interface State {
+    reset: () => void;
     questions: Question[]
     currentQuestion: number
     // como va a ser asicncrona va a devolder una promesa
@@ -79,6 +81,10 @@ export const useQuestionsStore = create<State>()(persist((set, get) => {
             if(previousQuestion < questions.length){
                 set({currentQuestion: previousQuestion})
             }
+        },
+        // resetear el estado global de la web por el boton reset
+        reset : () => {
+            set({questions: [], currentQuestion: 0})
         }
     }
 }, {

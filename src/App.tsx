@@ -1,52 +1,39 @@
-// App.tsx
-import { useEffect, useState } from 'react';
-import { Container, Stack, Typography, CircularProgress } from '@mui/material';
+import { Container, Stack, Typography, useTheme, useMediaQuery, CircularProgress } from '@mui/material';
 import './App.css';
 import { JavascriptLogo } from './Javascrit.tsx';
 import { Start } from './Start.tsx';
 import { useQuestionsStore } from './store/question.ts';
 import { Game } from './Game.tsx';
+import { useQuestionsData } from './assets/hooks/QuestionsData.tsx';
 
 function App() {
-  const { questions, fetchQuestions } = useQuestionsStore((state) => ({
+  const { questions, loading } = useQuestionsStore(state => ({
     questions: state.questions,
-    fetchQuestions: state.fetchQuestions,
+    loading: state.loading
   }));
 
-  const [loading, setLoading] = useState(true);
+  const { unanswer } = useQuestionsData();
+  const theme = useTheme();
+  const medium = useMediaQuery(theme.breakpoints.up("md"));
 
-  useEffect(() => {
-    const loadQuestions = async () => {
-      await fetchQuestions(10); // Llama a fetchQuestions con el límite deseado
-      setLoading(false);
-    };
-    loadQuestions();
-  }, [fetchQuestions]);
-
-  if (loading) {
-    return (
-      <Container maxWidth="sm">
-        <Stack direction='row' gap={2} alignItems='center' justifyContent='center'>
-          <CircularProgress />
-          <Typography variant='h6'>Cargando preguntas...</Typography>
-        </Stack>
-      </Container>
-    );
-  }
+    console.log("Questions length:", questions.length);
+    console.log("Unanswered questions:", unanswer);
 
   return (
     <main>
       <Container maxWidth="sm">
-        <Stack direction='row' gap={2} alignItems='center' justifyContent='center'>
+        <Stack direction="row" gap={2} alignItems="center" justifyContent="center">
           <JavascriptLogo />
-          <Typography variant='h2' component='h1'>
-            Javascript Quizz
+          <Typography variant={medium ? 'h2' : 'h5'} component="h1">
+            JavaScript Quiz
           </Typography>
         </Stack>
-        {/* Mostrar Start solo si questions.length es 0 después de la carga */}
-        {questions.length === 0 && <Start />}
-        {/* Mostrar Game si questions.length es mayor que 0 */}
-        {questions.length > 0 && <Game />}
+        
+        {loading && <CircularProgress />} {/* Muestra un spinner mientras se cargan las preguntas */}
+        
+        {!loading && questions.length === 0 && <Start />} {/* Muestra el botón de inicio si no hay preguntas cargadas */}
+        
+        {!loading && questions.length > 0 && unanswer > 0 && <Game />} {/* Muestra el juego si hay preguntas cargadas */}
       </Container>
     </main>
   );

@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { type Question } from '../types'
 import confetti from 'canvas-confetti';
+// persist es para capturar todos los cambios que se hagan en la store y lo sincroniza 
+import { persist } from 'zustand/middleware'
 
 // describe como es el estado 
 interface State {
@@ -17,7 +19,11 @@ interface State {
 // Con esto ya estamos creando el estado global de la web 
 // set es para actualizar el estado, get para leer el estado
 
-export const useQuestionsStore = create<State>((set, get) => {
+// ahi que envolver la funcion en persist para que se guarde en el localstorage por default 
+// de esa manera al recargar la pagina se mantenga el estado  de las respuestas las respuestas estan 
+// en el localstorage entrando en la consola  y entrando en la pestaña application y en el localstorage
+// ()persist((set, get) => ({}))
+export const useQuestionsStore = create<State>()(persist((set, get) => {
     return {
         questions: [],
         // currentQuestion: 0, es la primera pregunta de donde empezara 
@@ -75,5 +81,6 @@ export const useQuestionsStore = create<State>((set, get) => {
             }
         }
     }
-
-})
+}, {
+    name: 'questions'
+}))
